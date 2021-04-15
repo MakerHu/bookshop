@@ -15,10 +15,15 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class BookShopController {
 
-    @GetMapping(value = {"/", "/index"})
+    @RequestMapping(value = "/")
+    public String root() {
+        return "redirect:/index";
+    }
+
+    @GetMapping(value = "/index")
     public String getIndex(Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        System.out.println(session.getAttribute("msg"));
+//        HttpSession session = request.getSession();
+//        System.out.println(session.getAttribute("msg"));
         return "index";
     }
 }

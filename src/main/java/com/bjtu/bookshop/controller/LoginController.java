@@ -39,6 +39,7 @@ public class LoginController {
                     HttpSession session= request.getSession();
                     session.setAttribute("user", user);
                     session.setAttribute("msg", "登录成功");
+                    session.setAttribute("state", 1);
                     return "redirect:/index";
                 } else {
                     model.addAttribute("msg", "用户名或密码错误！");
