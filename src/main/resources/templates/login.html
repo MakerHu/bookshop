@@ -18,10 +18,10 @@
             <div>
                 <button class="btn" type="submit">登录</button>
             </div>
-            <div class="div_register">
-                <div th:text="${msg}"></div>
+            <div class="div_register" style="text-align: left">
                 <br>
-                <a class="a_register" href="/register">注册</a>
+                <span th:text="${msg}" style="width: 30px;height: 20px;color: red"></span>
+                <a class="a_register" href="/register" style="float: right">注册</a>
             </div>
         </form>
     </div>

@@ -8,12 +8,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 //@RestController
 @Controller
 public class BookShopController {
 
     @GetMapping(value = {"/", "/index"})
-    public String getIndex(Model model, @ModelAttribute("user") User user) {
+    public String getIndex(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        System.out.println(session.getAttribute("msg"));
         return "index";
     }
 }
