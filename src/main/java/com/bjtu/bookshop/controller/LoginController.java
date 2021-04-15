@@ -1,13 +1,12 @@
 package com.bjtu.bookshop.controller;
 
-import com.bjtu.bookshop.common.Result;
 import com.bjtu.bookshop.entity.User;
 import com.bjtu.bookshop.service.UserService;
-import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +35,7 @@ public class LoginController {
                 if (user.getPassword().equals(msgUser.getPassword())) {
                     //消除返回前端的收能过户数据中的重要信息
                     user.setPassword("");
-                    HttpSession session= request.getSession();
+                    HttpSession session = request.getSession();
                     session.setAttribute("user", user);
                     session.setAttribute("msg", "登录成功");
                     session.setAttribute("state", 1);
