@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>BookShop-login</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" th:href="@{./css/login.css}"/>
 </head>
 <body>
-    登录
+<div id="login">
+    <h1>用户登录</h1>
+    <div class="header-main">
+        <form th:action="@{/login}" th:object="${user}" method="POST">
+            <input type="text" required="required" placeholder="useremail" th:field="*{email}">
+            <input type="password" required="required" placeholder="password" th:field="*{password}">
+            <div>
+                <button class="btn" type="submit">登录</button>
+            </div>
+            <div class="div_register">
+                <div th:text="${msg}"></div>
+                <br>
+                <a class="a_register" href="/register">注册</a>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
+<!--<script th:src="@{./js/login_register.js}"></script>-->
 </html>
