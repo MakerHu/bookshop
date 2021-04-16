@@ -19,7 +19,7 @@
     <!-- //Global CSS for the page and tiles -->
     <!---start-click-drop-down-menu----->
     <script src="js/jquery.min.js"></script>
-<!--  start-dropdown---->
+    <!--  start-dropdown---->
     <script type="text/javascript">
         var $ = jQuery.noConflict();
         $(function () {
@@ -83,7 +83,8 @@
         <div class="userinfo">
             <div class="user">
                 <ul>
-                    <li><a href="#"><img src="images/user-pic.png" title="user-name"/><span th:text="${session.user.name}" th:if="${session.state == 1}"></span></a></li>
+                    <li><a href="#"><img src="images/user-pic.png" title="user-name"/><span
+                            th:text="${session.user.name}" th:if="${session.state == 1}"></span></a></li>
                 </ul>
             </div>
         </div>
@@ -93,6 +94,7 @@
 <!---//End-header---->
 <!---start-content---->
 <div class="content">
+    <div th:text="${session.msg}" th:if="${session.state==1}"></div>
     <div class="wrap" style="width: 906px">
         <div id="main" role="main">
             <ul id="tiles">
@@ -117,7 +119,7 @@
                     </div>
                 </li>
 
-<!--                    <li th:text="${book.name}"></li>-->
+                <!--                    <li th:text="${book.name}"></li>-->
                 <!-- End of grid blocks -->
             </ul>
         </div>
@@ -193,7 +195,7 @@
         <span th:if="${hasPrev}"><a th:href="@{/index(pageNum = ${prev})}">上一页</a>&nbsp;&nbsp;&nbsp;</span>
         <span th:if="${hasNext}"><a th:href="@{/index(pageNum = ${next})}">下一页</a></span>
     </div>
-<!--    <p>Copyright &copy; 胡江浩、陈庆洋、宋廷泽 All rights reserved.</p>-->
+    <!--    <p>Copyright &copy; 胡江浩、陈庆洋、宋廷泽 All rights reserved.</p>-->
 </div>
 <!----//End-footer--->
 <!---//End-wrap---->
