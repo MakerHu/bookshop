@@ -31,6 +31,7 @@ public class RegisterController {
             return "register";
         }
 
+        user.setRole("customer");
         userService.add(user);
         model.addAttribute("msg","注册成功！");
 

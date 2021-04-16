@@ -12,7 +12,7 @@ public class User {
     private String email;
     private String password;
     private String tel;
-    private String description;
+    private String role;
 
     public Integer getId() {
         return id;
@@ -54,11 +54,11 @@ public class User {
         this.tel = tel;
     }
 
-    public String getDescription() {
-        return description;
+    public String getRole() {
+        return role;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRole(String role) {
+        this.role = role;
     }
 }
