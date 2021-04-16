@@ -48,7 +48,7 @@ public class BookContentController {
     }
 
     @PostMapping(value = "/add")
-    public String addBook(@RequestParam(value = "file") MultipartFile file, @RequestParam(value = "name") String bookName, @RequestParam(value = "desc") String bookDesc, HttpServletRequest request, Model model) throws Exception {
+    public String addBook(@RequestParam(value = "file") MultipartFile file, @RequestParam(value = "name") String bookName, @RequestParam(value = "description") String bookDesc, HttpServletRequest request, Model model) throws Exception {
         HttpSession session = request.getSession();
 //        System.out.println(bookName + "\t" + bookDesc);
         if (file.isEmpty()) {
@@ -71,10 +71,11 @@ public class BookContentController {
             int date = calendar.get(Calendar.DATE);
 //            System.out.println(year + "/" + month + "/" + date);
             //创建文件夹
-            String filePath = new File("").getAbsolutePath();
-            filePath = filePath + "\\src\\main\\resources\\books\\" + year + "\\" + month + "\\" + date;
+            String localPath = new File("").getAbsolutePath();
+            String relativePath ="\\src\\main\\resources\\books\\" + year + "\\" + month + "\\" + date;
+            localPath = localPath + relativePath;
 //            System.out.println(filePath);
-            File tempFile = new File(filePath, fileName);
+            File tempFile = new File(localPath, fileName);
             //判断路径是否存在，不存在则创建一个
             if (!tempFile.getParentFile().exists()) {
                 tempFile.getParentFile().mkdirs();
@@ -85,11 +86,11 @@ public class BookContentController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//            Book book = new Book();
-//            book.setName(bookName);
-//            book.setDesc(bookDesc);
-//            book.setFilepath(filePath);
-//            bookService.add(book);
+            Book book = new Book();
+            book.setName(bookName);
+            book.setDescription(bookDesc);
+            book.setFilepath(relativePath);
+            bookService.add(book);
             session.setAttribute("msg", "文件上传成功！");
         }
         return "redirect:/index";

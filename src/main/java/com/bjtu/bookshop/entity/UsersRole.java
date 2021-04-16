@@ -10,7 +10,7 @@ public class UsersRole {
     private Integer id;
     private Integer uid;
     private Integer rid;
-    private String desc;
+    private String description;
 
     public Integer getId() {
         return id;
@@ -36,11 +36,11 @@ public class UsersRole {
         this.rid = rid;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
