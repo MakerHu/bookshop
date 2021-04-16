@@ -39,6 +39,7 @@ public class LoginController {
                     session.setAttribute("user", user);
                     session.setAttribute("msg", "登录成功");
                     session.setAttribute("state", 1);
+                    session.setAttribute("role", user.getRole());
                     return "redirect:/index";
                 } else {
                     model.addAttribute("msg", "用户名或密码错误！");

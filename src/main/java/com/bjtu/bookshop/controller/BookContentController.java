@@ -1,6 +1,7 @@
 package com.bjtu.bookshop.controller;
 
 import com.bjtu.bookshop.entity.Book;
+import com.bjtu.bookshop.entity.User;
 import com.bjtu.bookshop.service.BookService;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -94,6 +95,28 @@ public class BookContentController {
             bookService.add(book);
             session.setAttribute("msg", "文件上传成功！");
         }
+        return "redirect:/index";
+    }
+
+    @GetMapping(value = "/del")
+    public String delBook(@RequestParam(value = "bookId") int bookId,HttpServletRequest request, Model model){
+        Book existing = bookService.findById(bookId);
+        if (existing == null){
+            model.addAttribute("msg","书本不存在!");
+            return "index";
+        }
+
+        //定义文件路径
+        String filePath = existing.getFilepath();
+        //这里因为我文件是相对路径 所以需要在路径前面加一个点
+        File file = new File("."+filePath);
+        if (file.exists()){//文件是否存在
+            file.delete();//删除文件
+        }
+
+        bookService.del(bookId);
+        model.addAttribute("msg","删除成功！");
+
         return "redirect:/index";
     }
 

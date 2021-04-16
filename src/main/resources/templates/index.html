@@ -4,6 +4,14 @@
     <title>BookShop</title>
     <link rel="stylesheet" type="text/css" th:href="@{css/style.css}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--    弹窗开始-->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{css/form-elements.css}">
+    <link rel="stylesheet" th:href="@{css/style1.css}">
+<!--    弹窗结束-->
+
     <script type="application/x-javascript"> addEventListener("load", function () {
         setTimeout(hideURLbar, 0);
     }, false);
@@ -45,6 +53,50 @@
     <!---//End-click-drop-down-menu----->
 </head>
 <body>
+
+<!--弹窗开始-->
+<!-- MODAL -->
+<div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h3 class="modal-title" id="modal-register-label">添加书本</h3>
+                <p>请填写书籍的详细信息：</p>
+            </div>
+
+            <div class="modal-body">
+
+                <form role="form" th:action="@{/book/add}" method="post" class="registration-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="sr-only" for="form-first-name">书籍名称</label>
+                        <input type="text" th:name="name" name="form-first-name" placeholder="书籍名称..." class="form-first-name form-control" id="form-first-name">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="form-about-yourself">书籍简介</label>
+                        <textarea th:name="description" name="form-about-yourself" placeholder="书籍简介..."
+                                  class="form-about-yourself form-control" id="form-about-yourself"></textarea>
+                    </div>
+                    <div>
+                        <label>书籍文件(txt):</label>
+                        <input name="file" type="file">
+                    </div>
+                    <br>
+                    <button type="submit" class="btn">确认</button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--弹窗结束-->
+
+
 <!---start-wrap---->
 <!---start-header---->
 <div class="header">
@@ -88,6 +140,13 @@
                 </ul>
             </div>
         </div>
+
+        <!--        添加书本按钮-->
+        <div class="top-big-link" th:if="${session.role eq 'manager'}">
+            <a class="btn btn-link-1 launch-modal" href="#" data-modal-id="modal-register">添加书本</a>
+        </div>
+        <!--        添加书本按钮-->
+
         <div class="clear"></div>
     </div>
 </div>
@@ -104,15 +163,16 @@
                     <div class="post-info">
                         <div class="post-basic-info">
                             <h3><a th:href="@{/book/read(bookId = ${book.id})}" th:text="${book.name}"></a></h3>
-                            <span><a th:href="@{/book/read(bookId = ${book.id})}"><label> </label>books</a></span>
+                            <span><a th:href="@{/book/read(bookId = ${book.id})}"><label> </label>简介</a></span>
                             <p th:text="${book.description}" style="overflow: hidden"></p>
                         </div>
-                        <div class="post-info-rate-share">
-                            <div class="rateit">
+                        <div class="post-info-rate-share" th:if="${session.role eq 'manager'}">
+<!--                            <div class="rateit">-->
+<!--                                <span> </span>-->
+<!--                            </div>-->
+                            <div class="post-share" >
                                 <span> </span>
-                            </div>
-                            <div class="post-share">
-                                <span> </span>
+                                <a th:href="@{/book/del(bookId = ${book.id})}">删除</a>
                             </div>
                             <div class="clear"></div>
                         </div>
@@ -187,8 +247,22 @@
 <!--    })(jQuery);-->
 
 <!--</script>-->
+
+
+
+
 <!----//wookmark-scripts---->
 <!----start-footer--->
+
+
+<!--弹窗js-->
+<!-- Javascript -->
+<script th:src="@{js/jquery.min.js}"></script>
+<script th:src="@{js/bootstrap.min.js}"></script>
+<script th:src="@{js/jquery.backstretch.min.js}"></script>
+<script th:src="@{js/scripts.js}"></script>
+<!--弹窗js-->
+
 <div class="footer">
     <div>
         <!--                <span th:if="${hasPrev}"><a th:href="@{/index?page={prev}(prev=${prev})}">Prev</a>&nbsp;&nbsp;&nbsp;</span>-->

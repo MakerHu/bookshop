@@ -1,6 +1,7 @@
 package com.bjtu.bookshop.controller;
 
 import com.bjtu.bookshop.entity.Book;
+import com.bjtu.bookshop.entity.User;
 import com.bjtu.bookshop.service.BookService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -45,6 +46,8 @@ public class BookShopController {
         model.addAttribute("prev", pageNum - 1);
         model.addAttribute("hasNext", hasNext);
         model.addAttribute("next", pageNum + 1);
+
+        model.addAttribute("book",new Book());
         return "index";
     }
 }
