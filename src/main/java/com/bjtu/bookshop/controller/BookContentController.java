@@ -72,7 +72,7 @@ public class BookContentController {
 //            System.out.println(year + "/" + month + "/" + date);
             //创建文件夹
             String localPath = new File("").getAbsolutePath();
-            String relativePath ="\\src\\main\\resources\\books\\" + year + "\\" + month + "\\" + date;
+            String relativePath = "\\src\\main\\resources\\books\\" + year + "\\" + month + "\\" + date;
             localPath = localPath + relativePath;
 //            System.out.println(filePath);
             File tempFile = new File(localPath, fileName);
@@ -89,7 +89,7 @@ public class BookContentController {
             Book book = new Book();
             book.setName(bookName);
             book.setDescription(bookDesc);
-            book.setFilepath(relativePath);
+            book.setFilepath(relativePath + "\\" + fileName);
             bookService.add(book);
             session.setAttribute("msg", "文件上传成功！");
         }
