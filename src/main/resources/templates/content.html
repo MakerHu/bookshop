@@ -3,16 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${requestBook.name}">Title</title>
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/form-elements.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+
+    <style>
+        #main-part{
+            width: 60%;
+            margin:150px auto;
+        }
+    </style>
+
 </head>
+
 <body>
-<form th:action="@{/book/add}" method="post" enctype="multipart/form-data">
-    <label>书籍名称:</label>
-    <input th:name="name" type="text"><br>
-    <label>书籍简介:</label>
-    <input th:name="description" type="text"><br>
-    <label>书籍文件(txt):</label>
-    <input name="file" type="file"><br>
-    <input type="submit" value="确认">
-</form>
+<!--<form th:action="@{/book/add}" method="post" enctype="multipart/form-data">-->
+<!--    <label>书籍名称:</label>-->
+<!--    <input th:name="name" type="text"><br>-->
+<!--    <label>书籍简介:</label>-->
+<!--    <input th:name="description" type="text"><br>-->
+<!--    <label>书籍文件(txt):</label>-->
+<!--    <input name="file" type="file"><br>-->
+<!--    <input type="submit" value="确认">-->
+<!--</form>-->
+
+<!---start-header---->
+<div class="header">
+    <div class="wrap">
+        <div class="logo">
+            <a href="index.html"><img th:src="@{/images/logo.png}" title="BookShop"/></a>
+        </div>
+        <div class="nav-icon">
+            <a href="#" class="right_bt" id="activator"><span> </span> </a>
+        </div>
+        <div class="box" id="box">
+            <div class="box_content">
+                <div class="box_content_center">
+                    <div class="form_content">
+                        <div class="menu_box_list">
+                            <ul>
+                                <li><a href="#"><span>home</span></a></li>
+                                <li><a href="#"><span>About</span></a></li>
+                                <li><a href="#"><span>Works</span></a></li>
+                                <li><a href="#"><span>Clients</span></a></li>
+                                <li><a href="#"><span>Blog</span></a></li>
+                                <li><a href="contact.html"><span>Contact</span></a></li>
+                                <div class="clear"></div>
+                            </ul>
+                        </div>
+                        <a class="boxclose" id="boxclose"> <span> </span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="top-searchbar">
+            <form>
+                <input type="text"/><input type="submit" value=""/>
+            </form>
+        </div>
+        <div class="userinfo">
+            <div class="user">
+                <ul>
+                    <li><a href="#"><img th:src="@{/images/user-pic.png}" title="user-name"/><span
+                            th:text="${session.user.name}" th:if="${session.state == 1}"></span></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!--        添加书本按钮-->
+        <div class="top-big-link" th:if="${session.role eq 'manager'}">
+            <a class="btn btn-link-1 launch-modal" href="#" data-modal-id="modal-register">添加书本</a>
+        </div>
+        <!--        添加书本按钮-->
+
+        <div class="clear"></div>
+    </div>
+</div>
+<!---//End-header---->
+
+<div id="main-part">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title" th:text="${requestBook.name}">Panel title</h3>
+        </div>
+        <div class="panel-body">
+            Panel content
+        </div>
+    </div>
+
+    <nav aria-label="Page navigation" style="float: right">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.backstretch.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
 </body>
 </html>
