@@ -19,7 +19,7 @@ public class BookShopController {
     @Resource
     private BookService bookService;
 
-    @Value("8")
+    @Value("9")
     private int ROW_PER_PAGE;
 
 
@@ -29,12 +29,13 @@ public class BookShopController {
     }
 
     @GetMapping(value = "/index")
-    public String getIndex(@RequestParam(value = "page", defaultValue = "1") int pageNum, Model model, HttpServletRequest request) {
+    public String getIndex(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, Model model, HttpServletRequest request) {
 //        HttpSession session = request.getSession();
 //        System.out.println(session.getAttribute("msg"));
         List<Book> bookList = bookService.findAll(pageNum, ROW_PER_PAGE);
 
-//        System.out.println(bookList.get(1).getName());
+//        System.out.println(pageNum);
+//        System.out.println(bookList.size());
 
         int count = bookService.count();
         boolean hasPrev = pageNum > 1;
