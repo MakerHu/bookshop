@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${requestBook.name}">Title</title>
-
+    <!--  css  -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/form-elements.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
-
+    <!--  end css  -->
     <style>
-        #main-part{
+        #main-part {
             width: 60%;
-            margin:150px auto;
+            margin: 150px auto;
         }
     </style>
-
 </head>
 
 <body>
@@ -88,11 +87,9 @@
         <div class="panel-heading">
             <h3 class="panel-title" th:text="${requestBook.name}">Panel title</h3>
         </div>
-        <div class="panel-body">
-            Panel content
+        <div class="panel-body" th:text="${bookContent}">
         </div>
     </div>
-
     <nav aria-label="Page navigation" style="float: right">
         <ul class="pagination">
             <li>
@@ -113,9 +110,6 @@
         </ul>
     </nav>
 </div>
-
-
-
 
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>

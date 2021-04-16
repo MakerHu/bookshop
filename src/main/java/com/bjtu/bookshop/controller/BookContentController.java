@@ -1,7 +1,6 @@
 package com.bjtu.bookshop.controller;
 
 import com.bjtu.bookshop.entity.Book;
-import com.bjtu.bookshop.entity.User;
 import com.bjtu.bookshop.service.BookService;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -18,7 +17,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.UUID;
@@ -30,23 +31,36 @@ public class BookContentController {
     @Resource
     private BookService bookService;
 
-    @Value("E:/test/")
-    private String FILE_PATH;
+    //每页字节数
+    @Value("512")
+    private int PAGE_BYTES;
+    //总页数
+    private int pages;
+    //总内容
+    private byte[] content;
+    //总字节数
+    private int bytes;
+    //总字数
+    private int num;
+    private String contents;
 
     private static final Logger LOG = LoggerFactory.getLogger(BookContentController.class);
 
     @GetMapping(value = "/read")
-    public String getBook(@RequestParam int bookId, Model model, HttpServletRequest request) {
+    public String getBook(@RequestParam(value = "bookId") int bookId, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
-//        if(request.getAttribute("state")!= null && request.getAttribute("state").equals("1")){
         Book requestBook = bookService.findById(bookId);
         model.addAttribute("requestBook", requestBook);
-
+        String bookContent;
+        try {
+            setContent(bookId);
+            bookContent = getContent(pageNum);
+            model.addAttribute("bookContent", bookContent);
+            model.addAttribute("totalPage", getPages());
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         return "content";
-
-//        }else{
-//            return null;
-//        }
     }
 
     @PostMapping(value = "/add")
@@ -99,23 +113,23 @@ public class BookContentController {
     }
 
     @GetMapping(value = "/del")
-    public String delBook(@RequestParam(value = "bookId") int bookId,HttpServletRequest request, Model model){
+    public String delBook(@RequestParam(value = "bookId") int bookId, HttpServletRequest request, Model model) {
         Book existing = bookService.findById(bookId);
-        if (existing == null){
-            model.addAttribute("msg","书本不存在!");
+        if (existing == null) {
+            model.addAttribute("msg", "书本不存在!");
             return "index";
         }
 
         //定义文件路径
         String filePath = existing.getFilepath();
         //这里因为我文件是相对路径 所以需要在路径前面加一个点
-        File file = new File("."+filePath);
-        if (file.exists()){//文件是否存在
+        File file = new File("." + filePath);
+        if (file.exists()) {//文件是否存在
             file.delete();//删除文件
         }
 
         bookService.del(bookId);
-        model.addAttribute("msg","删除成功！");
+        model.addAttribute("msg", "删除成功！");
 
         return "redirect:/index";
     }
@@ -148,5 +162,47 @@ public class BookContentController {
         }
 
         return builder.body(FileUtils.readFileToByteArray(file));
+    }
+
+    //根据书籍id设置文件
+    public void setContent(Integer id) throws UnsupportedEncodingException {
+        Book book = bookService.findById(id);
+        String localPath = new File("").getAbsolutePath();
+        String relativePath = book.getFilepath();
+        readTxtFile(localPath + relativePath);
+    }
+
+    //读取文件得到总内容与总字节
+    public void readTxtFile(String filePath) throws UnsupportedEncodingException {
+        File textFile = new File(filePath);
+        bytes = (int) textFile.length();
+        System.out.println(bytes);
+        content = new byte[(int) textFile.length()];
+        try (FileInputStream fileInputStream = new FileInputStream(textFile)) {
+            fileInputStream.read(content);
+            System.out.println(new String(content, "UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        contents = new String(content, "UTF-8");
+    }
+
+    //得到总页数
+    public int getPages() {
+        num = contents.length();
+        pages = num / PAGE_BYTES + 1;
+        return pages;
+    }
+
+    //根据页数返回内容
+    public String getContent(int page) throws UnsupportedEncodingException {
+        String contents = new String(content, "UTF-8");
+        String contxt = "";
+        if (page == pages) {
+            contxt = contents.substring((page - 1) * PAGE_BYTES, num);
+        } else {
+            contxt = contents.substring((page - 1) * PAGE_BYTES, page * PAGE_BYTES);
+        }
+        return contxt;
     }
 }

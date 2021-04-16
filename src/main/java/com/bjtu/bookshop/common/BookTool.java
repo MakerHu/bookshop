@@ -21,6 +21,8 @@ public class BookTool {
     static private int pageBytes = 8;
     private String contents;
     private BookService bookService;
+
+    //根据书籍id设置文件
     public void setContent(Integer id) throws UnsupportedEncodingException {
         Book BookInfo = bookService.findById(id);
         String filepath = BookInfo.getFilepath();
@@ -30,32 +32,33 @@ public class BookTool {
     //读取文件得到总内容与总字节
     public void readTxtFile(String filePath) throws UnsupportedEncodingException {
         File textFile = new File(filePath);
-        bytes = (int)textFile.length();
+        bytes = (int) textFile.length();
         System.out.println(bytes);
-        content = new byte[(int)textFile.length()];
-        try(FileInputStream fileInputStream = new FileInputStream(textFile) ){
+        content = new byte[(int) textFile.length()];
+        try (FileInputStream fileInputStream = new FileInputStream(textFile)) {
             fileInputStream.read(content);
-            System.out.println(new String(content,"UTF-8"));
-        }catch (IOException e){
+            System.out.println(new String(content, "UTF-8"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        contents = new String(content,"UTF-8");
+        contents = new String(content, "UTF-8");
     }
+
     //得到总页数
     public int getPages() {
         num = contents.length();
-        pages = num/pageBytes + 1;
+        pages = num / pageBytes + 1;
         return pages;
     }
+
     //根据页数返回内容
     public String getContent(int page) throws UnsupportedEncodingException {
-        String contents = new String(content,"UTF-8");
+        String contents = new String(content, "UTF-8");
         String contxt = "";
-        if(page == pages) {
+        if (page == pages) {
             contxt = contents.substring((page - 1) * pageBytes, num);
-        }
-        else{
-            contxt = contents.substring((page-1)*pageBytes,page*pageBytes);
+        } else {
+            contxt = contents.substring((page - 1) * pageBytes, page * pageBytes);
         }
         return contxt;
     }

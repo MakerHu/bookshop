@@ -8,3 +8,9 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+    servlet:
+      content-type: text/html
