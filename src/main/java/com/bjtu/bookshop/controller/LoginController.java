@@ -2,6 +2,8 @@ package com.bjtu.bookshop.controller;
 
 import com.bjtu.bookshop.entity.User;
 import com.bjtu.bookshop.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,21 +19,11 @@ import org.apache.commons.codec.binary.Base64;
 @Controller
 //@RequestMapping("/login")
 public class LoginController {
+    @Autowired
+    private BCryptPasswordEncoder encoding;
+
     @Resource
     private UserService userService;
-
-
-    /**
-     * 解密方法
-     *
-     * @param pwd
-     * @return
-     */
-    public static String decodeStr(String pwd) {
-        Base64 base64 = new Base64();
-        byte[] debytes = base64.decodeBase64(new String(pwd).getBytes());
-        return new String(debytes);
-    }
 
 
     @GetMapping(value = "/login")
@@ -48,7 +40,10 @@ public class LoginController {
 //            System.out.println();
             User user = userService.findByEmail(msgUser.getEmail());
             if (user != null) {
-                if (decodeStr(user.getPassword()).equals(msgUser.getPassword())) {
+
+//                if ((user.getPassword()).equals(msgUser.getPassword())) {
+                // 匹配密码
+                if (encoding.matches(msgUser.getPassword(),user.getPassword())) {
                     //消除返回前端的收能过户数据中的重要信息
                     user.setPassword("");
                     HttpSession session = request.getSession();

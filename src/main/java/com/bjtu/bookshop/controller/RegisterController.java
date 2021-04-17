@@ -3,6 +3,9 @@ package com.bjtu.bookshop.controller;
 
 import com.bjtu.bookshop.entity.User;
 import com.bjtu.bookshop.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,22 +23,12 @@ import org.apache.commons.codec.binary.Base64;
 @Controller
 public class RegisterController {
 
+    @Autowired
+    private BCryptPasswordEncoder encoding;
+
     @Resource
     private UserService userService;
 
-
-    private static final byte[] DES_KEY = { 21, 1, -110, 82, -32, -85, -128, -65 };
-    /**
-     * 加密方法
-     * @param pwd
-     * @return
-     */
-    public static String encodeStr(String pwd)
-    {
-        Base64 base64 = new Base64();
-        byte[] enbytes = base64.encodeBase64Chunked(pwd.getBytes());
-        return new String(enbytes);
-    }
 
     @GetMapping(value = "/register")
     public String register(Model model){
@@ -51,7 +44,8 @@ public class RegisterController {
             return "register";
         }
 
-        String encryptPassword = encodeStr(user.getPassword());
+        // 密码加密
+        String encryptPassword = encoding.encode(user.getPassword());
         user.setPassword(encryptPassword);
         user.setRole("customer");
         userService.add(user);
