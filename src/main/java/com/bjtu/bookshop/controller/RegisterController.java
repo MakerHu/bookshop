@@ -15,6 +15,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import java.security.SecureRandom;
+import org.apache.commons.codec.binary.Base64;
 
 @Controller
 public class RegisterController {
@@ -26,29 +27,14 @@ public class RegisterController {
     private static final byte[] DES_KEY = { 21, 1, -110, 82, -32, -85, -128, -65 };
     /**
      * 加密方法
-     * @param data
+     * @param pwd
      * @return
      */
-    @SuppressWarnings("restriction")
-    public static String encryptBasedDes(String data) {
-        String encryptedData = null;
-        try {
-            // DES算法要求有一个可信任的随机数源
-            SecureRandom sr = new SecureRandom();
-            DESKeySpec deskey = new DESKeySpec(DES_KEY);
-            // 创建一个密匙工厂，然后用它把DESKeySpec转换成一个SecretKey对象
-            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-            SecretKey key = keyFactory.generateSecret(deskey);
-            // 加密对象
-            Cipher cipher = Cipher.getInstance("DES");
-            cipher.init(Cipher.ENCRYPT_MODE, key, sr);
-            // 加密，并把字节数组编码成字符串
-            encryptedData = new sun.misc.BASE64Encoder().encode(cipher.doFinal(data.getBytes()));
-        } catch (Exception e) {
-            // log.error("加密错误，错误信息：", e);
-            throw new RuntimeException("加密错误，错误信息：", e);
-        }
-        return encryptedData;
+    public static String encodeStr(String pwd)
+    {
+        Base64 base64 = new Base64();
+        byte[] enbytes = base64.encodeBase64Chunked(pwd.getBytes());
+        return new String(enbytes);
     }
 
     @GetMapping(value = "/register")
@@ -65,7 +51,7 @@ public class RegisterController {
             return "register";
         }
 
-        String encryptPassword = encryptBasedDes(user.getPassword());
+        String encryptPassword = encodeStr(user.getPassword());
         user.setPassword(encryptPassword);
         user.setRole("customer");
         userService.add(user);

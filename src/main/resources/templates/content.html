@@ -16,72 +16,41 @@
         }
     </style>
 </head>
-
 <body>
-<!--<form th:action="@{/book/add}" method="post" enctype="multipart/form-data">-->
-<!--    <label>书籍名称:</label>-->
-<!--    <input th:name="name" type="text"><br>-->
-<!--    <label>书籍简介:</label>-->
-<!--    <input th:name="description" type="text"><br>-->
-<!--    <label>书籍文件(txt):</label>-->
-<!--    <input name="file" type="file"><br>-->
-<!--    <input type="submit" value="确认">-->
-<!--</form>-->
-
 <!---start-header---->
 <div class="header">
     <div class="wrap">
         <div class="logo">
-            <a href="index.html"><img th:src="@{/images/logo.png}" title="BookShop"/></a>
+            <a th:href="@{/index}"><img th:src="@{images/logo.png}" title="BookShop"/></a>
         </div>
-        <div class="nav-icon">
-            <a href="#" class="right_bt" id="activator"><span> </span> </a>
+        <div style="float: left;margin-top: 8px;margin-left: 50px">
+            <a th:href="@{/index}" style="font-size: 31px;line-height: 31px;color: dodgerblue;font-weight: bold">啥都没有网上书城</a>
         </div>
-        <div class="box" id="box">
-            <div class="box_content">
-                <div class="box_content_center">
-                    <div class="form_content">
-                        <div class="menu_box_list">
-                            <ul>
-                                <li><a href="#"><span>home</span></a></li>
-                                <li><a href="#"><span>About</span></a></li>
-                                <li><a href="#"><span>Works</span></a></li>
-                                <li><a href="#"><span>Clients</span></a></li>
-                                <li><a href="#"><span>Blog</span></a></li>
-                                <li><a href="contact.html"><span>Contact</span></a></li>
-                                <div class="clear"></div>
-                            </ul>
-                        </div>
-                        <a class="boxclose" id="boxclose"> <span> </span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="top-searchbar">
-            <form>
-                <input type="text"/><input type="submit" value=""/>
-            </form>
-        </div>
-        <div class="userinfo">
+        <div class="userinfo" style="margin-right: 10%">
             <div class="user">
-                <ul>
-                    <li><a href="#"><img th:src="@{/images/user-pic.png}" title="user-name"/><span
-                            th:text="${session.user.name}" th:if="${session.state == 1}"></span></a></li>
+                <ul style="margin-bottom: 0">
+                    <li th:switch="${session.state}">
+                        <a th:case="0" th:href="@{/login}">
+                            <img th:src="@{/images/user-pic.png}" title="user-name"/>
+                            <span th:text="请登录"></span>
+                        </a>
+                        <a th:case="1" th:href="@{/index}">
+                            <img th:src="@{/images/user-pic.png}" title="user-name"/>
+                            <span th:text="${session.user.name}"></span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
-
-        <!--        添加书本按钮-->
+        <!-- 添加书本按钮-->
         <div class="top-big-link" th:if="${session.role eq 'manager'}">
             <a class="btn btn-link-1 launch-modal" href="#" data-modal-id="modal-register">添加书本</a>
         </div>
         <!--        添加书本按钮-->
-
         <div class="clear"></div>
     </div>
 </div>
 <!---//End-header---->
-
 <div id="main-part">
     <div class="panel panel-info">
         <div class="panel-heading">
@@ -96,17 +65,16 @@
     <nav aria-label="Page navigation" style="float: right">
         <ul class="pagination">
             <li>
-                <a th:if="${hasPrev}" th:href="@{/book/read(pageNum = ${prev},bookId = ${requestBook.id})}" aria-label="Previous">
+                <a th:if="${hasPrev}" th:href="@{/book/read(pageNum = ${prev},bookId = ${requestBook.id})}"
+                   aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li th:each="p : ${#numbers.sequence(startPage,endPage)}"><a th:href="@{/book/read(pageNum = ${p},bookId = ${requestBook.id})}" th:text="${p}"></a></li>
-<!--            <li><a href="#">2</a></li>-->
-<!--            <li><a href="#">3</a></li>-->
-<!--            <li><a href="#">4</a></li>-->
-<!--            <li><a href="#">5</a></li>-->
+            <li th:each="p : ${#numbers.sequence(startPage,endPage)}"><a
+                    th:href="@{/book/read(pageNum = ${p},bookId = ${requestBook.id})}" th:text="${p}"></a></li>
             <li>
-                <a th:if="${hasNext}" th:href="@{/book/read(pageNum = ${next},bookId = ${requestBook.id})}" aria-label="Next">
+                <a th:if="${hasNext}" th:href="@{/book/read(pageNum = ${next},bookId = ${requestBook.id})}"
+                   aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

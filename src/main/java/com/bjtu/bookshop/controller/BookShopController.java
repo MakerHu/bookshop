@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 //@RestController
@@ -31,13 +32,13 @@ public class BookShopController {
 
     @GetMapping(value = "/index")
     public String getIndex(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, Model model, HttpServletRequest request) {
-//        HttpSession session = request.getSession();
-//        System.out.println(session.getAttribute("msg"));
+        HttpSession session = request.getSession();
+        if (session.getAttribute("state")==null){
+            session.setAttribute("state",0);
+            session.setAttribute("msg","请登录");
+        }
+//        System.out.println(session.getAttribute("state"));
         List<Book> bookList = bookService.findAll(pageNum, ROW_PER_PAGE);
-
-//        System.out.println(pageNum);
-//        System.out.println(bookList.size());
-
         int count = bookService.count();
         boolean hasPrev = pageNum > 1;
         boolean hasNext = (pageNum * ROW_PER_PAGE) < count;
@@ -46,7 +47,6 @@ public class BookShopController {
         model.addAttribute("prev", pageNum - 1);
         model.addAttribute("hasNext", hasNext);
         model.addAttribute("next", pageNum + 1);
-
         model.addAttribute("book",new Book());
         return "index";
     }
