@@ -186,6 +186,8 @@
         </div>
     </div>
 </div>
+
+
 <!--弹窗js-->
 <!-- Javascript -->
 <script th:src="@{js/jquery.min.js}"></script>
@@ -194,10 +196,33 @@
 <script th:src="@{js/scripts.js}"></script>
 <!--弹窗js-->
 <div class="footer">
+<!--    <div>-->
+<!--        <span th:if="${hasPrev}"><a th:href="@{/index(pageNum = ${prev})}">上一页</a>&nbsp;&nbsp;&nbsp;</span>-->
+<!--        <span th:if="${hasNext}"><a th:href="@{/index(pageNum = ${next})}">下一页</a></span>-->
+<!--    </div>-->
+    <!--        翻页-->
     <div>
-        <span th:if="${hasPrev}"><a th:href="@{/index(pageNum = ${prev})}">上一页</a>&nbsp;&nbsp;&nbsp;</span>
-        <span th:if="${hasNext}"><a th:href="@{/index(pageNum = ${next})}">下一页</a></span>
+        <nav aria-label="Page navigation" style="float: right">
+            <ul class="pagination">
+                <li>
+                    <a th:if="${hasPrev}" th:href="@{/index(pageNum = ${prev})}"
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li th:each="p : ${#numbers.sequence(startPage,endPage)}"><a
+                        th:href="@{/index(pageNum = ${p})}" th:text="${p}"></a></li>
+                <li>
+                    <a th:if="${hasNext}" th:href="@{/index(pageNum = ${next})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
+    <!--        翻页-->
+
     <!--    <p>Copyright &copy; 胡江浩、陈庆洋、宋廷泽 All rights reserved.</p>-->
 </div>
 </body>

@@ -42,11 +42,16 @@ public class BookShopController {
         int count = bookService.count();
         boolean hasPrev = pageNum > 1;
         boolean hasNext = (pageNum * ROW_PER_PAGE) < count;
+        int startPage = (pageNum-2)>0 ? (pageNum-2):1;
+        int endPage = (pageNum+2)>(count/9+1) ? (count/9+1):(pageNum+2);
+
         model.addAttribute("bookList", bookList);
         model.addAttribute("hasPrev", hasPrev);
         model.addAttribute("prev", pageNum - 1);
         model.addAttribute("hasNext", hasNext);
         model.addAttribute("next", pageNum + 1);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
         model.addAttribute("book",new Book());
         return "index";
     }

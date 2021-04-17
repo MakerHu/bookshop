@@ -14,6 +14,14 @@
             width: 60%;
             margin: 150px auto;
         }
+
+        pre {
+            white-space: pre-wrap; /* css3.0 */
+            white-space: -moz-pre-wrap; /* Firefox */
+            white-space: -o-pre-wrap; /* Opera 7 */
+            word-wrap: break-word; /* Internet Explorer 5.5+ */
+            background-color: #c7edcc;
+        }
     </style>
 </head>
 <body style="background-color: rgba(229,229,229,0.7)">
@@ -47,15 +55,19 @@
 </div>
 <!---//End-header---->
 <div id="main-part">
-    <div class="panel panel-info" style="-webkit-box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.4);-moz-box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.4);box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.4);">
+    <div class="panel panel-info"
+         style="-webkit-box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.4);-moz-box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.4);box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.4);">
         <div class="panel-heading">
-            <h3 class="panel-title" th:text="${requestBook.name}">Panel title</h3>
+            <h3 class="panel-title" th:text="${requestBook.name}" style="font-size: 20px;font-weight: bolder">Panel
+                title</h3>
             <span th:text="${currentPage}"></span>
             <span>/</span>
             <span th:text="${totalPage}"></span>
+            <span>页</span>
         </div>
-        <div class="panel-body" th:text="${bookContent}"
-             style="font-size: 20px;font-family:'Times New Roman'">
+        <div class="panel-body"
+             style="font-size: 20px;font-family:'Times New Roman';background-color: #c7edcc;">
+            <pre th:text="${bookContent}"></pre>
         </div>
     </div>
     <nav aria-label="Page navigation" style="float: right">

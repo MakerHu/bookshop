@@ -32,7 +32,7 @@ public class BookContentController {
     private BookService bookService;
 
     //每页字节数
-    @Value("4096")
+    @Value("1024")
     private int PAGE_BYTES;
     //总页数
     private int pages;
