@@ -86,24 +86,27 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title" th:text="${requestBook.name}">Panel title</h3>
+            <span th:text="${currentPage}"></span>
+            <span>/</span>
+            <span th:text="${totalPage}"></span>
         </div>
-        <div class="panel-body" th:text="${bookContent}">
+        <div class="panel-body" th:text="${bookContent}" style="font-size: 20px;font-family:'Times New Roman'">
         </div>
     </div>
     <nav aria-label="Page navigation" style="float: right">
         <ul class="pagination">
             <li>
-                <a href="#" aria-label="Previous">
+                <a th:if="${hasPrev}" th:href="@{/book/read(pageNum = ${prev},bookId = ${requestBook.id})}" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
+            <li th:each="p : ${#numbers.sequence(startPage,endPage)}"><a th:href="@{/book/read(pageNum = ${p},bookId = ${requestBook.id})}" th:text="${p}"></a></li>
+<!--            <li><a href="#">2</a></li>-->
+<!--            <li><a href="#">3</a></li>-->
+<!--            <li><a href="#">4</a></li>-->
+<!--            <li><a href="#">5</a></li>-->
             <li>
-                <a href="#" aria-label="Next">
+                <a th:if="${hasNext}" th:href="@{/book/read(pageNum = ${next},bookId = ${requestBook.id})}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

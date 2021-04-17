@@ -32,7 +32,7 @@ public class BookContentController {
     private BookService bookService;
 
     //每页字节数
-    @Value("512")
+    @Value("4096")
     private int PAGE_BYTES;
     //总页数
     private int pages;
@@ -54,9 +54,25 @@ public class BookContentController {
         String bookContent;
         try {
             setContent(bookId);
+            System.out.println("pageNum: "+pageNum);
             bookContent = getContent(pageNum);
             model.addAttribute("bookContent", bookContent);
             model.addAttribute("totalPage", getPages());
+
+            int count = getPages();
+            boolean hasPrev = pageNum > 1;
+            boolean hasNext = pageNum < count;
+            int startPage = (pageNum-2)>0 ? (pageNum-2):1;
+            int endPage = (pageNum+2)>count ? count:(pageNum+2);
+
+            model.addAttribute("currentPage", pageNum);
+            model.addAttribute("hasPrev", hasPrev);
+            model.addAttribute("prev", pageNum - 1);
+            model.addAttribute("hasNext", hasNext);
+            model.addAttribute("next", pageNum + 1);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -198,7 +214,7 @@ public class BookContentController {
     public String getContent(int page) throws UnsupportedEncodingException {
         String contents = new String(content, "UTF-8");
         String contxt = "";
-        if (page == pages) {
+        if (page == getPages()) {
             contxt = contents.substring((page - 1) * PAGE_BYTES, num);
         } else {
             contxt = contents.substring((page - 1) * PAGE_BYTES, page * PAGE_BYTES);
