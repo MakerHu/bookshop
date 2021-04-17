@@ -47,6 +47,7 @@
                 return false; //Prevent the browser jump to the link anchor
             });
         });
+
         function downloadBook(state, id) {
             // sessionStorage.getItem('state');
             // console.log(state+"    "+id);
@@ -63,7 +64,7 @@
     <!----//End-dropdown--->
     <!---//End-click-drop-down-menu----->
 </head>
-<body>
+<body style="background-color: rgba(229,229,229,0.7)">
 <!--弹窗开始-->
 <!-- MODAL -->
 <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register-label"
@@ -109,7 +110,7 @@
 <!--弹窗结束-->
 <!---start-wrap---->
 <!---start-header---->
-<div class="header">
+<div class="header" style="background-color: #eeebcc">
     <div class="wrap">
         <div class="logo">
             <a th:href="@{/index}"><img th:src="@{images/logo.png}" title="BookShop"/></a>
@@ -149,19 +150,19 @@
         <div id="main" role="main">
             <ul id="tiles">
                 <!-- These are our grid blocks -->
-                <li th:onclick="" th:each="book:${bookList}">
+                <li th:onclick="" th:each="book:${bookList}"
+                    style="background-color: rgba(245,240,158,0.67);-webkit-box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.4);-moz-box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.4);box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.4);">
                     <img th:src="@{/images/book.png}" width="200" height="200">
                     <div class="post-info">
                         <div class="post-basic-info">
-                            <h3><a th:href="@{/book/read(bookId = ${book.id})}" th:text="${book.name}"></a></h3>
-                            <span><a th:href="@{/book/read(bookId = ${book.id})}"><label> </label>简介</a></span>
-                            <p th:text="${book.description}" style="overflow: hidden"></p>
+                            <h3><a th:href="@{/book/read(bookId = ${book.id})}" th:text="${book.name}" style="font-weight: 400"></a></h3>
+                            <span><a th:href="@{/book/read(bookId = ${book.id})}" style="color: #717171;font-size: 1.1em"><label> </label>简介</a></span>
+                            <p th:text="${book.description}" style="color: #717171"></p>
                         </div>
                         <div class="post-info-rate-share">
                             <div>
                                 <span> </span>
                                 <div style="float: right">
-                                    <!--                                    th:href="@{/book/download(bookId=${book.id})}"-->
                                     <a id="downloadBtn" href="javascript:void(0);"
                                        onclick="downloadBook(this.getAttribute('data-state'),this.getAttribute('data-bookId'))"
                                        th:data-bookId="${book.id}" th:data-state="${session.state}">

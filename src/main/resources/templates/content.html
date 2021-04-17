@@ -16,12 +16,12 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: rgba(229,229,229,0.7)">
 <!---start-header---->
-<div class="header">
+<div class="header" style="background-color: #eeebcc">
     <div class="wrap">
         <div class="logo">
-            <a th:href="@{/index}"><img th:src="@{images/logo.png}" title="BookShop"/></a>
+            <a th:href="@{/index}"><img th:src="@{/images/logo.png}" title="BookShop"/></a>
         </div>
         <div style="float: left;margin-top: 8px;margin-left: 50px">
             <a th:href="@{/index}" style="font-size: 31px;line-height: 31px;color: dodgerblue;font-weight: bold">啥都没有网上书城</a>
@@ -42,24 +42,20 @@
                 </ul>
             </div>
         </div>
-        <!-- 添加书本按钮-->
-        <div class="top-big-link" th:if="${session.role eq 'manager'}">
-            <a class="btn btn-link-1 launch-modal" href="#" data-modal-id="modal-register">添加书本</a>
-        </div>
-        <!--        添加书本按钮-->
         <div class="clear"></div>
     </div>
 </div>
 <!---//End-header---->
 <div id="main-part">
-    <div class="panel panel-info">
+    <div class="panel panel-info" style="-webkit-box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.4);-moz-box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.4);box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.4);">
         <div class="panel-heading">
             <h3 class="panel-title" th:text="${requestBook.name}">Panel title</h3>
             <span th:text="${currentPage}"></span>
             <span>/</span>
             <span th:text="${totalPage}"></span>
         </div>
-        <div class="panel-body" th:text="${bookContent}" style="font-size: 20px;font-family:'Times New Roman'">
+        <div class="panel-body" th:text="${bookContent}"
+             style="font-size: 20px;font-family:'Times New Roman'">
         </div>
     </div>
     <nav aria-label="Page navigation" style="float: right">

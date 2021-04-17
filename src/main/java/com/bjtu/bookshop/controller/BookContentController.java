@@ -62,8 +62,8 @@ public class BookContentController {
             int count = getPages();
             boolean hasPrev = pageNum > 1;
             boolean hasNext = pageNum < count;
-            int startPage = (pageNum-2)>0 ? (pageNum-2):1;
-            int endPage = (pageNum+2)>count ? count:(pageNum+2);
+            int startPage = (pageNum-4)>0 ? (pageNum-4):1;
+            int endPage = (pageNum+4)>count ? count:(pageNum+4);
 
             model.addAttribute("currentPage", pageNum);
             model.addAttribute("hasPrev", hasPrev);
@@ -192,11 +192,11 @@ public class BookContentController {
     public void readTxtFile(String filePath) throws UnsupportedEncodingException {
         File textFile = new File(filePath);
         bytes = (int) textFile.length();
-        System.out.println(bytes);
+//        System.out.println(bytes);
         content = new byte[(int) textFile.length()];
         try (FileInputStream fileInputStream = new FileInputStream(textFile)) {
             fileInputStream.read(content);
-            System.out.println(new String(content, "UTF-8"));
+//            System.out.println(new String(content, "UTF-8"));
         } catch (IOException e) {
             e.printStackTrace();
         }
