@@ -1,2 +1,2 @@
 # bookshop
-电子书店项目
+电子书店项目springboot+thymeleaf
